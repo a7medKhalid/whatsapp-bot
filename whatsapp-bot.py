@@ -29,14 +29,19 @@ input('Press enter after scanning QR code or after the page has fully loaded\n')
 
 # infinte loop to detect new messages
 while True:
-    # find by xpath a span in span with class _7T_0D with a title that contains the name of the contact
-    conversations = driver.find_elements(By.XPATH, '//span[@class="_7T_0D"]')
+    conversations = driver.find_elements(By.CSS_SELECTOR, '.le5p0ye3.l7jjieqr._11JPr')
 
-    # unreadConversation = []
-    # for conversation in conversations:
-    #     conversationName = conversation.find_element(By.CLASS_NAME , '_3ko75 _5h6Y_ _3Whw5').text
+    unreadConversation = []
+    for conversation in conversations:
+        try:
+            # if conversation has unread span add to unread
+            conversationName = conversation(By.XPATH , ".//span[@class='l7jjieqr cfzgl7ar ei5e7seu h0viaqh7 tpmajp1w c0uhu3dl riy2oczp dsh4tgtl sy6s5v3r gz7w46tb lyutrhe2 qfejxiq4 fewfhwl7 ovhn1urg ap18qm3b ikwl5qvt j90th5db aumms1qt'")
+            unreadConversation.append(conversation)
+        except:
+            print('no')
+        
 
-
+    print(conversations)
     # read the messages
 
     # send response
