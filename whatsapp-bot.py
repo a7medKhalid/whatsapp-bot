@@ -19,7 +19,11 @@ input('Press enter after scanning QR code or after the page has fully loaded\n')
 
 
 from datetime import datetime
+# take current time without seconds
 start_time = datetime.now()
+start_time = start_time.replace(second=0, microsecond=0)
+print(start_time)
+
 
 
 messagesDB = []
@@ -71,7 +75,8 @@ while True:
             message_time = datetime.strptime(message_time, "%I:%M %p,%Y/%m/%d")
             
             # compare two times if meeage time is older print yes
-            time_compare =  message_time > start_time
+            time_compare =  message_time >= start_time
+            print(start_time,message_time)
             print(time_compare,message)
             
 
@@ -82,8 +87,8 @@ while True:
                 
                 msg_box = driver.find_element(By.CSS_SELECTOR, '.fd365im1.to2l77zo.bbv8nyr4.gfz4du6o.ag5g9lrv.bze30y65.kao4egtt')
                 print('sending response')
-                # msg_box.send_keys('hi i am a b-o-t')
-                # msg_box.send_keys(u'\ue007')
+                msg_box.send_keys('hi i am a b-o-t')
+                msg_box.send_keys(u'\ue007')
                 messagesDB.append(message)
             
             # unclick conversation
