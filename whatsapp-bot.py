@@ -28,6 +28,28 @@ print(start_time)
 
 messagesDB = []
 counter = 0
+
+
+def get_respones(message):
+    # get user input 
+    if message_text == 'مرحبا':
+        response = 'مرحبا بك' + '\n'
+    elif message_text == 'حكمة':
+        # get random quote from api
+        import requests
+        import json
+        import random
+
+        url = "https://type.fit/api/quotes"
+        response = requests.get(url)
+        quotes = json.loads(response.text)
+        quote = random.choice(quotes)
+        response = quote['text'] + '\n' + quote['author']
+    else:
+        response = 'أرسل حكمة لتصلك حكمة' + '\n'
+
+    return response
+
 while True:
     # scroll sidepane to top
     sidepane = driver.find_element(By.XPATH, "//div[@class='g0rxnol2 _3fGK2']")
@@ -92,24 +114,8 @@ while True:
             # check if message is not read send resopnse
             if message not in messagesDB and time_compare:
 
-                # get user input 
-                if message_text == 'مرحبا':
-                    msg_box.send_keys('مرحبا بك' + '\n')
-                elif message_text == 'حكمة':
-                    # get random quote from api
-                    import requests
-                    import json
-                    import random
-
-                    url = "https://type.fit/api/quotes"
-                    response = requests.get(url)
-                    quotes = json.loads(response.text)
-                    quote = random.choice(quotes)
-                    msg_box.send_keys(quote['text'] + '\n' + quote['author'])
-                else:
-                    msg_box.send_keys('أرسل حكمة لتصلك حكمة')
-
-
+                response = get_respones(message_text)
+                msg_box.send_keys(response)
                 msg_box.send_keys(u'\ue007')
                 messagesDB.append(message)
                     
